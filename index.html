@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./script.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <title>Formulário de Cadastro</title>
+</head>
+<body>
+  <header>
+    <h1>Cadastros De Pessoas</h1>
+  </header>
+  <main>
+    <div class="container">
+      <div id="form-content">
+        <form action="#" class="form" id="js-form">
+          <div class="input-field">
+            <label for="name">Nome da pessoa (<span>campo obrigatório</span>)</label>
+            <input type="text" name="name" id="name" placeholder="Nome Completo" minlength="3" maxlength="120" autofocus required>
+            <span class="input-required"></span>
+            <label for="birth-date">Data de nascimento (<span>campo obrigatório</span>)</label>
+            <input type="date" name="birth-date" id="birth-date" required>
+            <span class="input-required">Deve ser uma data valida</span>
+          </div>
+          <button type="submit" id="submit-button" disabled>Cadastrar</button>
+          <button type="button" id="save-button" hidden>Salvar</button>
+        </form>
+      </div>
+      <div id="table-content">
+        <table id="table">
+          <caption>
+            Pessoas Registradas localmente
+          </caption>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Data de nascimento</th>
+              <th>ações</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
