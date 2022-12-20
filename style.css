@@ -83,6 +83,7 @@ header h1 {
 
 #table thead tr th {
   text-align: left;
+  padding: 3.5px 20px;
 }
 
 #table thead tr th:nth-child(3) {
