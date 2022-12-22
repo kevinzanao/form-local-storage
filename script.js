@@ -84,7 +84,7 @@ function instructionsSpan() {
 
 // Release the submit button
 function releaseToSend() {
-    if ($name.value.length > 0 && $birthDate.value.length > 0) {
+    if ($name.value.length > 0 && $birthDate.value.length > 0 && !isNumberPattern.test($name.value)) {
       if (inputNameConfirmation && birthDateConfirmation) {
         $submit.disabled = false;
         enterKeyDown();
@@ -98,10 +98,12 @@ function releaseToSend() {
 
 // Release the save button
 function releaseToSave() {
-    if (inputNameConfirmation && birthDateConfirmation) {
+    if (inputNameConfirmation && birthDateConfirmation && !isNumberPattern.test($name.value)) {
       $saveButton.disabled = false;
+      // console.log("liberei o botão de salvar")
       enterKeyDown(); 
     } else {
+      // console.log("bloqueei o botaão de salvar")
       $saveButton.disabled = true;
     }
 
@@ -181,16 +183,17 @@ function getInputValues() {
   
   console.log("envior os valores")
 
-  if (nameValue.length > 0 && birthDateValue.length > 0) {
+  if (nameValue.length > 0 && birthDateValue.length > 0 && !isNumberPattern.test($name.value)) {
     addToLocalStorage(createPerson(nameValue, birthDateValue));
+
+    $name.value = '';
+    $birthDate.value = '';
   }
 
   getStoredPeoplesAndShow();
 
   inputNameConfirmation = false;
   birthDateConfirmation = false;
-  $name.value = '';
-  $birthDate.value = '';
   $submit.disabled = true;
   $name.focus();
 }
@@ -235,7 +238,7 @@ function updateHtmlElementsState(person) {
 
   nameRegexValidation();
   birthDateValidation(person.birthDate);
-
+  
   $submit.hidden = true;
   $saveButton.hidden = false;
 }
@@ -271,18 +274,18 @@ $saveButton.onclick = savePersonDataEdit;
 // use enter key to put the person object in local storage
 function enterKeyDown() {
   document.addEventListener('keydown', (event) => {
-    if ($saveButton.hidden === false && $saveButton.disabled === false) {
-      if (event.keyCode === 13) {
-        event.target.onclick = savePersonDataEdit;
-        // enterKeyDefault("levantou save");
+    // console.log('entrei no keydown')
+    if (event.keyCode === 13) {
+      if ($saveButton.hidden === false && $saveButton.disabled === false) {
+        // console.log("entrei no savebutton habilitado")
+        savePersonDataEdit();
+      } else if ($submit.hidden === false && $submit.disabled === false) {
+        // console.log("entrei no submit habilitado")
+        // event.key = getInputValues;
+        // console.log(event.key)
       } 
-    } else if ($submit.hidden === false && $submit.disabled === false) {
-      if (event.keyCode === 13) {
-        event.target.onclick = getInputValues;
-        // enterKeyDefault("levantou submit");
-      }
     }
-  })
+  });
 }
  
 // function enterKeyDefault(msg) {

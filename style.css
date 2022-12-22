@@ -69,7 +69,8 @@ header h1 {
   cursor: pointer;
 }
 
-#form-content form #submit-button:disabled {
+#form-content form #submit-button:disabled,
+#form-content form #save-button:disabled {
   opacity: 0.6;
   cursor: default;
 }
