@@ -85,8 +85,10 @@ function instructionsSpan() {
 // Release the submit button
 function releaseToSend() {
     if ($name.value.length > 0 && $birthDate.value.length > 0) {
-      $submit.disabled = false;
-      enterKeyDown();
+      if (inputNameConfirmation && birthDateConfirmation) {
+        $submit.disabled = false;
+        enterKeyDown();
+      }
     } else {
       $submit.disabled = true;
     }
@@ -120,13 +122,9 @@ function createTableElements(value) {
   const editButton = document.createElement('img');
   const deleteButton = document.createElement('img');
 
-  // Format birth date to BR type
-  let birthDateFormated = value.birthDate.split("/");
-  birthDateFormated.reverse()
-
   tr.id = value.id;
   td_name.innerText = value.name;
-  td_birth.innerText = birthDateFormated.join("/");
+  td_birth.innerText = value.birthDate;
   editButton.src = './assets/edit-icon.svg';
   editButton.alt = 'edit icon';
   editButton.addEventListener('click', editPersonData);
@@ -181,6 +179,8 @@ function getInputValues() {
   let nameValue = $name.value;
   let birthDateValue = $birthDate.value;
   
+  console.log("envior os valores")
+
   if (nameValue.length > 0 && birthDateValue.length > 0) {
     addToLocalStorage(createPerson(nameValue, birthDateValue));
   }
@@ -204,7 +204,9 @@ let lastPersonDataUsed;
 function savePersonDataEdit() {
   const data = lastPersonDataUsed;
   const personData = data[0];
-  
+
+  console.log("salvou os dados")
+
   const personIndexArray = data[1];
   let storedPeoples = JSON.parse(localStorage.getItem("peoples"));
   
@@ -269,17 +271,24 @@ $saveButton.onclick = savePersonDataEdit;
 // use enter key to put the person object in local storage
 function enterKeyDown() {
   document.addEventListener('keydown', (event) => {
-    if ($saveButton.hidden === false) {
+    if ($saveButton.hidden === false && $saveButton.disabled === false) {
       if (event.keyCode === 13) {
-        savePersonDataEdit()
+        event.target.onclick = savePersonDataEdit;
+        // enterKeyDefault("levantou save");
       } 
-    } else if ($submit.hidden === false) {
+    } else if ($submit.hidden === false && $submit.disabled === false) {
       if (event.keyCode === 13) {
-        getInputValues()
+        event.target.onclick = getInputValues;
+        // enterKeyDefault("levantou submit");
       }
     }
   })
 }
+ 
+// function enterKeyDefault(msg) {
+//   console.log(msg)
+//   event.target.onclick = "";
+// }
 
 // Creates an array in local storage, and adds the "person" object inside
 function addToLocalStorage(person) {
