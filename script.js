@@ -181,7 +181,7 @@ function getInputValues() {
   let nameValue = $name.value;
   let birthDateValue = $birthDate.value;
   
-  console.log("envior os valores")
+  // console.log("envior os valores")
 
   if (nameValue.length > 0 && birthDateValue.length > 0 && !isNumberPattern.test($name.value)) {
     addToLocalStorage(createPerson(nameValue, birthDateValue));
@@ -208,7 +208,7 @@ function savePersonDataEdit() {
   const data = lastPersonDataUsed;
   const personData = data[0];
 
-  console.log("salvou os dados")
+  // console.log("salvou os dados")
 
   const personIndexArray = data[1];
   let storedPeoples = JSON.parse(localStorage.getItem("peoples"));
