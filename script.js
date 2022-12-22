@@ -84,22 +84,24 @@ function instructionsSpan() {
 
 // Release the submit button
 function releaseToSend() {
-  if (inputNameConfirmation && birthDateConfirmation) {
-    $submit.disabled = false;
-  } else {
-    $submit.disabled = true;
-  }
+    if ($name.value.length > 0 && $birthDate.value.length > 0) {
+      $submit.disabled = false;
+      enterKeyDown();
+    } else {
+      $submit.disabled = true;
+    }
 
   instructionsSpan();
 }
 
 // Release the save button
 function releaseToSave() {
-  if (inputNameConfirmation && birthDateConfirmation) {
-    $saveButton.disabled = false;
-  } else {
-    $saveButton .disabled = true;
-  }
+    if (inputNameConfirmation && birthDateConfirmation) {
+      $saveButton.disabled = false;
+      enterKeyDown(); 
+    } else {
+      $saveButton.disabled = true;
+    }
 
   instructionsSpan();
 }
@@ -248,6 +250,7 @@ function editPersonData() {
   $name.focus();
 }
 
+// Delete person's object in interface and localStorage
 function deletePersonRegister() {
   const data = getPersonData()
   
@@ -263,20 +266,17 @@ function deletePersonRegister() {
 $submit.onclick = getInputValues;
 $saveButton.onclick = savePersonDataEdit;
 
-function enterKeyDownSave() {
+// use enter key to put the person object in local storage
+function enterKeyDown() {
   document.addEventListener('keydown', (event) => {
-    if (event.keyCode === 13) {
-      console.log("cliquei no enter ")
-      savePersonDataEdit();
-    }
-  })
-}
-
-function enterKeyDownSubmit() {
-  document.addEventListener('keydown', (event) => {
-    if (event.keyCode === 13) {
-      console.log("enter de submit")
-      getInputValues();
+    if ($saveButton.hidden === false) {
+      if (event.keyCode === 13) {
+        savePersonDataEdit()
+      } 
+    } else if ($submit.hidden === false) {
+      if (event.keyCode === 13) {
+        getInputValues()
+      }
     }
   })
 }

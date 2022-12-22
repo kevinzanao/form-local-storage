@@ -66,10 +66,12 @@ header h1 {
   border: none;
   border-radius: 3px;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 #form-content form #submit-button:disabled {
   opacity: 0.6;
+  cursor: default;
 }
 
 #table-content {
