@@ -12,7 +12,7 @@ const $saveButton = document.getElementById('save-button');
 
 // Input patterns
 const namePattern = /\D{2,119}([aA-zZ]+([ç]+)?)/;
-const birthDatePattern = /\d{2}[/]\d{2}[/]\d{4}/;
+const birthDatePattern = /^\d{2}[/]\d{2}[/]\d{4}$/;
 const isNumberPattern = /\d/;
 let inputNameConfirmation = false;
 let birthDateConfirmation = false;  
@@ -84,7 +84,10 @@ function instructionsSpan() {
 
 // Release the submit button
 function releaseToSend() {
-    if ($name.value.length > 0 && $birthDate.value.length > 0 && !isNumberPattern.test($name.value)) {
+  let inputConditions = $name.value.length > 0 && $birthDate.value.length > 0;
+  let inputFormatConditions = !isNumberPattern.test($name.value) && birthDatePattern.test($birthDate.value);
+
+    if (inputConditions && inputFormatConditions) {
       if (inputNameConfirmation && birthDateConfirmation) {
         $submit.disabled = false;
         enterKeyDown();
@@ -180,10 +183,10 @@ function getStoredPeoplesAndShow() {
 function getInputValues() {
   let nameValue = $name.value;
   let birthDateValue = $birthDate.value;
-  
-  // console.log("envior os valores")
+  let inputConditions = nameValue.length > 0 && birthDateValue.length > 0;
+  let inputFormatConditions = !isNumberPattern.test($name.value) && birthDatePattern.test($birthDate.value);
 
-  if (nameValue.length > 0 && birthDateValue.length > 0 && !isNumberPattern.test($name.value)) {
+  if (inputConditions && inputFormatConditions) {
     addToLocalStorage(createPerson(nameValue, birthDateValue));
 
     $name.value = '';
@@ -274,24 +277,14 @@ $saveButton.onclick = savePersonDataEdit;
 // use enter key to put the person object in local storage
 function enterKeyDown() {
   document.addEventListener('keydown', (event) => {
-    // console.log('entrei no keydown')
     if (event.keyCode === 13) {
       if ($saveButton.hidden === false && $saveButton.disabled === false) {
-        // console.log("entrei no savebutton habilitado")
         savePersonDataEdit();
       } else if ($submit.hidden === false && $submit.disabled === false) {
-        // console.log("entrei no submit habilitado")
-        // event.key = getInputValues;
-        // console.log(event.key)
       } 
     }
   });
 }
- 
-// function enterKeyDefault(msg) {
-//   console.log(msg)
-//   event.target.onclick = "";
-// }
 
 // Creates an array in local storage, and adds the "person" object inside
 function addToLocalStorage(person) {
